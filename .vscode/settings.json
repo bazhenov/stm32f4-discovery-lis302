@@ -1,0 +1,4 @@
+{
+    "C_Cpp.default.includePath": ["./libopencm3/include"],
+    "C_Cpp.default.defines": ["STM32F4"]
+}

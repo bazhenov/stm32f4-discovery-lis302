@@ -4,15 +4,14 @@
 
 int main(void)
 {
-		lvs302 acc;
+	//lvs302 acc;
     int i;
-    rcc_periph_clock_enable(RCC_GPIOC);
-    gpio_set_mode(GPIOC, GPIO_MODE_OUTPUT_2_MHZ,
-        GPIO_CNF_OUTPUT_PUSHPULL, GPIO13);
+    rcc_periph_clock_enable(RCC_GPIOD);
+    gpio_mode_setup(GPIOD, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, GPIO12);
       
-    /* Blink the LED (PC13) on the board. */
+    /* Blink the LED (PD12) on the board. */
     while (1) {
-        gpio_toggle(GPIOC, GPIO13);
+        gpio_toggle(GPIOD, GPIO12);
         for (i = 0; i < 800000; i++)
             __asm__("nop");
     }
