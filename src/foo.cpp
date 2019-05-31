@@ -4,7 +4,7 @@
 
 int main(void)
 {
-	//lvs302 acc;
+	lvs302 acc;
     int i;
     rcc_periph_clock_enable(RCC_GPIOD);
     gpio_mode_setup(GPIOD, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, GPIO12);
