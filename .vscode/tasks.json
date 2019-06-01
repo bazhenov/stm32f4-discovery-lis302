@@ -1,19 +1,29 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Compile and Flash",
-            "type": "shell",
-            "command": "make st-flash",
-            "options": {
-                "cwd": "${workspaceFolder}/src"
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        }
-    ]
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Debug",
+			"type": "shell",
+			"command": "make clean elf && arm-none-eabi-gdb -ex 'target extended-remote :4242' -ex 'monitor reset halt' -ex 'load' main.elf",
+			"options": {
+				"cwd": "${workspaceFolder}/src"
+			},
+			"group": "build",
+			"problemMatcher": []
+		},
+		{
+			"label": "Compile",
+			"type": "shell",
+			"command": "make elf",
+			"options": {
+				"cwd": "${workspaceFolder}/src"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
 }
