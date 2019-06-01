@@ -28,7 +28,6 @@ static void msleep(uint32_t delay) {
 
 int main(void) {
 	lvs302 acc;
-	int i;
 	systick_setup();
 
 	rcc_periph_clock_enable(RCC_GPIOD);
