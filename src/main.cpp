@@ -3,7 +3,7 @@
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/stm32/spi.h>
-#include "lvs302.h"
+#include "lis3dsh.h"
 
 static void systick_setup(void) {
 	rcc_clock_setup_hse_3v3(&rcc_hse_8mhz_3v3[RCC_CLOCK_3V3_168MHZ]);
@@ -51,7 +51,7 @@ static void spi_setup() {
 }
 
 int main(void) {
-	lvs302 acc(SPI1);
+	lis3dsh acc(SPI1);
 	systick_setup();
 
 	spi_setup();
@@ -66,11 +66,11 @@ int main(void) {
 	while (1) {
 		gpio_toggle(GPIOD, GPIO12);
 		//uint8_t h = acc.readRegister(0x28);
-		// uint8_t high = acc.readRegister(0x2C);
-		// uint8_t low = acc.readRegister(0x2D);
+		// uint8_t low = acc.readRegister(0x2C);
+		// uint8_t high = acc.readRegister(0x2D);
 		// int16_t value = (high << 8) | low;
 
-		uint8_t temp = acc.readRegister(0x0C);
+		int8_t temp = acc.readRegister(0x0C);
 
 		msleep(500);
 	}
