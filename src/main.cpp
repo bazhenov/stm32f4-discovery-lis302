@@ -34,9 +34,7 @@ static void spi_setup() {
 
 	// Use A5/6/7 as SPI
 	rcc_periph_clock_enable(RCC_GPIOA);
-	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO5);
-	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO7);
-	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO6);
+	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO5 | GPIO6 | GPIO7);
 	gpio_set_af(GPIOA, GPIO_AF5, GPIO5 | GPIO6 | GPIO7);
 
 	rcc_periph_clock_enable(RCC_SPI1);
@@ -59,17 +57,16 @@ int main(void) {
 	rcc_periph_clock_enable(RCC_GPIOD);
 	gpio_mode_setup(GPIOD, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, GPIO12);
 
-	uint8_t hello = acc.readRegister(0x0F);
+	uint8_t hello = acc.readRegister(LIS3DSH_REG_WHO_AM_I);
 
-	acc.writeRegister(0x20, 0b01010111);
-	//acc.writeRegister(0x24, 0b00100000);
+	acc.writeRegister(LIS3DSH_REG_CTRL_REG4, LIS3DSH_ODR_POWER_50HZ | LIS3DSH_XYZ_ENABLED);
+	acc.writeRegister(LIS3DSH_REG_CTRL_REG5, LIS3DSH_FSCALE_2G);
+
+	int16_t xyz[3];
 	while (1) {
 		gpio_toggle(GPIOD, GPIO12);
-		//uint8_t h = acc.readRegister(0x28);
-		// uint8_t low = acc.readRegister(0x2C);
-		// uint8_t high = acc.readRegister(0x2D);
-		// int16_t value = (high << 8) | low;
 
+		acc.readXyz(xyz);
 		int8_t temp = acc.readRegister(0x0C);
 
 		msleep(500);
