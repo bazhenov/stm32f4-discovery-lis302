@@ -4,9 +4,9 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Debug",
+			"label": "Flash",
 			"type": "shell",
-			"command": "make clean elf && arm-none-eabi-gdb -ex 'target extended-remote :4242' -ex 'monitor reset halt' -ex 'load' main.elf",
+			"command": "make clean elf st-flash",
 			"options": {
 				"cwd": "${workspaceFolder}/src"
 			},
